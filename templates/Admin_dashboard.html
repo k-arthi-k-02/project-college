@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Admin Dashboard</h2>
+        <div class="text-end mb-3">
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+        
+        <!-- Event Management -->
+        <h4>Manage Events</h4>
+        <form action="{{ url_for('add_event') }}" method="POST" class="mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" name="event_name" class="form-control" placeholder="Event Name" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="event_date" class="form-control" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="time" name="event_time" class="form-control" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="event_location" class="form-control" placeholder="Location" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="event_purpose" class="form-control" placeholder="Purpose/Objective" required>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-3">
+                    <input type="text" name="event_audience" class="form-control" placeholder="Target Audience" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="event_activities" class="form-control" placeholder="Key Activities/Speakers" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="event_usps" class="form-control" placeholder="Unique Selling Points" required>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Add Event</button>
+                </div>
+            </div>
+        </form>
+        <div class="mb-3">
+            <a href="{{ url_for('download_events') }}" class="btn btn-success">Download Events (Excel)</a>
+            <a href="{{ url_for('download_registrations') }}" class="btn btn-success">Download Registrations (Excel)</a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Event Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Location</th>
+                    <th>Purpose</th>
+                    <th>Target Audience</th>
+                    <th>Key Activities/Speakers</th>
+                    <th>Unique Selling Points</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event[0] }}</td>
+                    <td>{{ event[1] }}</td>
+                    <td>{{ event[2] }}</td>
+                    <td>{{ event[3] }}</td>
+                    <td>{{ event[4] }}</td>
+                    <td>{{ event[5] }}</td>
+                    <td>{{ event[6] }}</td>
+                    <td>{{ event[7] }}</td>
+                    <td>{{ event[8] }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_event', event_id=event[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <!-- User Management -->
+        <h4>Registered Users</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Class/Section</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[3] }}</td>
+                    <td>{{ user[4] }}</td>
+                    <td>{{ user[5] }}</td>
+                    <td>{{ user[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
